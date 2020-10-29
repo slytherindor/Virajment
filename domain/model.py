@@ -6,9 +6,12 @@ class Building:
     building_id: str
     name: str
     address: str
+    city: str
+    zipcode: str
+    province: str
 
 
-class BuildingSectionData:
+class BuildingSection:
     def __init__(self, floor, room, location):
         self.floor = floor
         self.room = room
