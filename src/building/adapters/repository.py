@@ -1,9 +1,9 @@
 import abc
 
-from building.domain.model import Building
+from building.domain.model import Building, LeadData, AcmData, PcbData
 
 
-class AbstractRepository(abc.ABC):
+class AbstractBuildingRepository(abc.ABC):
 
     @abc.abstractmethod
     def add(self, building: Building):
@@ -18,7 +18,22 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
 
-class SqlAlchemyBuildingRepository(AbstractRepository):
+class AbstractDataRepository(abc.ABC):
+
+    @abc.abstractmethod
+    def add(self, data):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def list_by_building_section(self, building_section_id: str):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def list(self):
+        raise NotImplementedError
+
+
+class SqlAlchemyBuildingRepository(AbstractBuildingRepository):
 
     def __init__(self, session):
         self.session = session
@@ -31,3 +46,49 @@ class SqlAlchemyBuildingRepository(AbstractRepository):
 
     def list(self):
         return self.session.query(Building).all()
+
+
+class SqlAlchemyLeadDataRepository(AbstractDataRepository):
+    def __init__(self, session):
+        self.session = session
+
+    def list_by_building_section(self, building_section_id: str):
+        return self.session.query(LeadData).filter_by(building_section_id=building_section_id).all()
+
+    def add(self, data: LeadData):
+        self.session.add(data)
+
+    def list(self):
+        return self.session.query(LeadData).all()
+
+
+class SqlAlchemyAcmDataRepository(AbstractDataRepository):
+    def __init__(self, session):
+        self.session = session
+
+    def list_by_building_section(self, building_section_id: str):
+        return self.session.query(AcmData).filter_by(building_section_id=building_section_id).all()
+
+    def add(self, data: AcmData):
+        self.session.add(data)
+
+    def list(self):
+        return self.session.query(AcmData).all()
+
+
+class SqlAlchemyPcbDataRepository(AbstractDataRepository):
+    def __init__(self, session):
+        self.session = session
+
+    def list_by_building_section(self, building_section_id: str):
+        return self.session.query(PcbData).filter_by(building_section_id=building_section_id).all()
+
+    def add(self, data: PcbData):
+        self.session.add(data)
+
+    def list(self):
+        return self.session.query(PcbData).all()
+
+
+
+
