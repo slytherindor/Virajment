@@ -1,6 +1,6 @@
 import abc
 
-from domain.model import Building, BuildingSection, PcbData, LeadData, AcmData
+from building.domain.model import Building
 
 
 class AbstractRepository(abc.ABC):

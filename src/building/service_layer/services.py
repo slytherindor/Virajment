@@ -1,5 +1,5 @@
-from adapters.repository import AbstractRepository
-from domain.model import Building, BuildingSection
+from building.adapters.repository import AbstractRepository
+from building.domain.model import Building, BuildingSection
 
 
 def createBuilding(building: Building, repo: AbstractRepository, session):
