@@ -14,7 +14,7 @@ class Building:
 
 
 class BuildingSection:
-    def __init__(self, building_id: int, floor: str, room: str):
+    def __init__(self, building_id: str, floor: str, room: str):
         self.building_id = building_id
         self.floor = floor
         self.room = room
