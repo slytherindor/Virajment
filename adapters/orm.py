@@ -29,7 +29,8 @@ building_section = Table(
 acm_data = Table(
     'acm_data', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('location_id', ForeignKey('building_section.id')),
+    Column('building_section_id', ForeignKey('building_section.id')),
+    Column('location', String(255)),
     Column('component', String(255)),
     Column('material', String(255)),
     Column('material_description', String(255)),
@@ -46,7 +47,8 @@ acm_data = Table(
 lead_data = Table(
     'lead_data', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('location_id', ForeignKey('building_section.id')),
+    Column('building_section_id', ForeignKey('building_section.id')),
+    Column('location', String(255)),
     Column('sample_id', String(255)),
     Column('paint_colour', String(255)),
     Column('lead_concentration', String(255)),
@@ -60,7 +62,8 @@ lead_data = Table(
 pcb_data = Table(
     'pcb_data', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('location_id', ForeignKey('building_section.id')),
+    Column('building_section_id', ForeignKey('building_section.id')),
+    Column('location', String(255)),
     Column('sample_id', String(255)),
     Column('item', String(255)),
     Column('manufacturer', String(255)),
