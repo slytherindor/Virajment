@@ -1,37 +1,41 @@
 from dataclasses import dataclass
 
 
-@dataclass(unsafe_hash=True)
 class Building:
-    building_id: str
-    name: str
-    address: str
-    city: str
-    zipcode: str
-    province: str
+
+    def __init__(self, building_id: str, name: str, address: str, city: str, zipcode: str, province: str):
+        self.building_id = building_id
+        self.name = name
+        self.address = address
+        self.city = city
+        self.zipcode = zipcode
+        self.province = province
+        self.building_sections = set()  # type: set[BuildingSection]
 
 
 class BuildingSection:
-    def __init__(self, floor, room, location):
+    def __init__(self, building_id: int, floor: str, room: str):
+        self.building_id = building_id
         self.floor = floor
         self.room = room
-        self.location = location
         self.__acmdata = None
         self.__leaddata = None
         self.__pcbdata = None
 
     def __repr__(self):
-        return f'<BuildingSectionData {self.floor} {self.room} {self.location}>'
+        return f'<BuildingSectionData {self.floor} {self.room}>'
 
     def __hash__(self):
-        return hash(f'F{self.floor}R{self.room}L{self.location})')
+        return hash(f'F{self.floor}R{self.room}')
 
 
 @dataclass(unsafe_hash=True)
 class AcmData:
+    building_section_id: str
+    location: str
     component: str
     material: str
-    material_description: str 
+    material_description: str
     sample_number: str
     asbestos: str
     condition: str
@@ -44,6 +48,8 @@ class AcmData:
 
 @dataclass(unsafe_hash=True)
 class LeadData:
+    building_section_id: str
+    location: str
     sample_id: str
     paint_colour: str
     lead_concentration: str
@@ -56,6 +62,8 @@ class LeadData:
 
 @dataclass(unsafe_hash=True)
 class PcbData:
+    building_section_id: str
+    location: str
     sample_id: str
     item: str
     manufacturer: str
@@ -64,6 +72,3 @@ class PcbData:
     markings: str
     pcbs: str
     notes: str
-
-
-
