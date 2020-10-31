@@ -49,7 +49,6 @@ def create_acm_data(data: AcmData, repo: AbstractDataRepository, session):
 
 
 def get_building_sections(building_id: str, repo: AbstractBuildingRepository):
-    print(building_id)
     building = repo.get(building_id)
     if not building.building_sections:
         return []
@@ -62,6 +61,12 @@ def get_all_buildings(repo: AbstractBuildingRepository):
     data = repo.list()
     json_data = create_buildings_dict(data)
     return json_data
+
+
+def get_data_for_building_section(section_id: str, repo: AbstractDataRepository):
+    data = repo.list_by_building_section(section_id)
+    cleaned_data = remove_non_primitive_types_from_object(data)
+    return cleaned_data
 
 
 def remove_non_primitive_types_from_object(data):

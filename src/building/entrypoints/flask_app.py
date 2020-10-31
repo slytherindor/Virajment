@@ -10,6 +10,7 @@ from building.service_layer import services
 from flask import Flask, jsonify, request, make_response
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from enum import Enum
 
 app = Flask(__name__)
 
@@ -149,4 +150,15 @@ def get_all_building_sections(building_id):
     session = get_session()
     repo = SqlAlchemyBuildingRepository(session)
     data = services.get_building_sections(building_id, repo)
+    return jsonify({'data': data}), 200
+
+
+@app.route("/building/<building_id>/sections/<section_id>/<data_type>", methods=["GET"])
+def get_data_for_section(building_id, section_id, data_type):
+    session = get_session()
+    repos = {"lead": SqlAlchemyLeadDataRepository,
+             "pcb": SqlAlchemyPcbDataRepository,
+             "acm": SqlAlchemyAcmDataRepository}
+    repo = repos[data_type]
+    data = services.get_data_for_building_section(section_id, repo(session))
     return jsonify({'data': data}), 200
