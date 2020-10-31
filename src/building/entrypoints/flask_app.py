@@ -88,7 +88,7 @@ def add_lead_data():
 
 
 @app.route("/acm", methods=["POST"])
-def add_lead_data():
+def add_acm_data():
     session = get_session()
     repo = SqlAlchemyAcmDataRepository(session)
     try:
@@ -114,7 +114,7 @@ def add_lead_data():
 
 
 @app.route("/pcb", methods=["POST"])
-def add_lead_data():
+def add_pcb_data():
     session = get_session()
     repo = SqlAlchemyPcbDataRepository(session)
     try:
@@ -134,3 +134,19 @@ def add_lead_data():
     except Exception as e:
         return jsonify({'message': str(e)}), 400
     return make_response('Created', 201)
+
+
+@app.route("/building/all", methods=["GET"])
+def get_all_buildings():
+    session = get_session()
+    repo = SqlAlchemyBuildingRepository(session)
+    data = services.get_all_buildings(repo)
+    return jsonify({'data': data}), 200
+
+
+@app.route("/building/<building_id>/sections", methods=["GET"])
+def get_all_building_sections(building_id):
+    session = get_session()
+    repo = SqlAlchemyBuildingRepository(session)
+    data = services.get_building_sections(building_id, repo)
+    return jsonify({'data': data}), 200
