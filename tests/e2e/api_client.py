@@ -6,10 +6,9 @@ def post_to_add_building(name, address, zipcode, city, province):
     url = config.get_api_url()
     r = requests.post(
         f'{url}/building',
-        json={"name": name, "address": address, "zipcode": zipcode, "province": province}
+        json={"name": name, "address": address, "zipcode": zipcode, "province": province, "city": city}
     )
     return r
-
 
 
 def post_to_add_building_section(building_id, floor, room):
