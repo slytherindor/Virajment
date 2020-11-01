@@ -4,8 +4,8 @@ build:
 up:
 	docker-compose up -d app
 
-test:
-	pytest --tb=short
+test: up
+        docker-compose run --rm --no-deps --entrypoint=pytest app /tests/integration /tests/e2e
 
 logs:
 	docker-compose logs app | tail -100
